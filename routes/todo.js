@@ -5,7 +5,6 @@ const auth = require('../middlewares/auth')
 
 /* GET users listing. */
 router
-  .get('/test', todoController.test)
   .get('/searchTags', auth, todoController.searchTags)
   .get('/getComplete', auth, todoController.getTasksComplete)
   .get('/getIncomplete', auth, todoController.getTasksIncomplete)

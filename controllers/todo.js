@@ -2,9 +2,6 @@ const User  = require('../models/user');
 const Todo = require('../models/todo');
 
 class ToDoController{
-   static test(req,res){
-      res.json("HALO")
-   }
    static createTask(req,res){
       let {name, description} = req.body;
       let tags = req.body.tags.split(" ");

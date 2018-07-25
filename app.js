@@ -14,6 +14,8 @@ mongoose.connect(url, {useNewUrlParser: true} , function(err){
   console.log("DB connected - let's data this base!")
 })
 
+
+const indexRouter = require('./routes/index');
 const todoRouter = require('./routes/todo');
 const usersRouter = require('./routes/users');
 
@@ -25,6 +27,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
 
+app.use('/', indexRouter);
 app.use('/todo', todoRouter);
 app.use('/users', usersRouter);
 
