@@ -72,7 +72,7 @@ class ToDoController{
    static completeTask(req,res){
       let taskid = req.headers.taskid;
       let userId = req.decoded._id;
-      let password = req.body.password;
+      // let password = req.body.password;
 
       Todo.findById({_id: taskid})
       .then(function(task){
@@ -86,13 +86,10 @@ class ToDoController{
                console.log("before add", currentProgress)
                if((currentProgress += 10) < 100){
                   console.log(currentProgress)
-                  user.progress += 10;
-                  user.password = password;
-                  user.save()
+                  User.update({_id:user._id}, {$set:{progress: user.progress+=10}})
                   .then(function(updated){
                      console.log("---", updated)
                      res.status(200).json({
-                        updated,
                         completed
                      })
                   })

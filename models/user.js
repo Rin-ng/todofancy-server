@@ -25,9 +25,9 @@ const UserSchema = new Schema({
         validate:{
             validator: function(value){
                 let regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/
+                console.log('halo')
                 return regex.test(value);
-            },
-            message: "Password needs to include at least: /n - 1 number /n - length of 6"
+            }
         }
     },
     progress:{
@@ -37,6 +37,10 @@ const UserSchema = new Schema({
     level:{
         type: Number,
         default: 1,
+    },
+    profileImg:{
+        type: String,
+        default: "https://thumbs.gfycat.com/CoordinatedBogusLice-size_restricted.gif"
     }
 }, {timestamps: true});
 

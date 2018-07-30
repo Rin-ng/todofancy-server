@@ -10,7 +10,7 @@ const auth = function(req, res, next){
       
          if(decoded){
             let decodedId = decoded._id;
-
+            console.log(decodedId)
             User.findById(decodedId)
             .then(function(user){
                if(user._id == id){
