@@ -70,16 +70,18 @@ class ToDoController{
    }
 
    static completeTask(req,res){
+      console.log(req.headers);
+      console.log('decoded', req.decoded)
       let taskid = req.headers.taskid;
       let userId = req.decoded._id;
       // let password = req.body.password;
-
-      Todo.findById({_id: taskid})
-      .then(function(task){
-         task.completed = true;
-         task.save()
+      console.log('oke2')
+      Todo.update({_id: taskid}, {$set: {completed: true}})
+      .exec()
+      .then(function(){
+         Todo.findById({_id: taskid})
          .then(function(completed){
-
+            console.log("ini completed: " , completed)
             User.findById({_id: completed.user})
             .then(function(user){
                let currentProgress = user.progress;
@@ -89,6 +91,7 @@ class ToDoController{
                   User.update({_id:user._id}, {$set:{progress: user.progress+=10}})
                   .then(function(updated){
                      console.log("---", updated)
+                     console.log("user status dah d update")
                      res.status(200).json({
                         completed
                      })
@@ -98,12 +101,8 @@ class ToDoController{
                   })
                }
                else{
-                  user.progress = 0;
-                  user.level++;
-
-                  user.password = password;
-                  console.log("====>", user)
-                  user.save()
+                  console.log("------------------__", user)
+                  User.update({_id:user._id}, {$set: { progress: 0, level : user.level+=1}})
                   .then(function(updated){
                      res.status(200).json({
                         updated,
@@ -117,6 +116,7 @@ class ToDoController{
             })
             .catch(function(err){
                console.log("error pas d user ish")
+               console.log(err.message);
                res.status(400).json(err.message);
             })
          })

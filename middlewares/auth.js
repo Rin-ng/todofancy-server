@@ -2,19 +2,16 @@ const jwt = require ('jsonwebtoken');
 const User = require('../models/user');
 
 const auth = function(req, res, next){
-   let {token, id} = req.headers;
-   console.log("----------", id);
-
+   let {token} = req.headers;
+   console.log("dah d auth")
    if(token){
       jwt.verify(token, process.env.secretKey, function(err, decoded){
-      
          if(decoded){
+            console.log("masuk d decoded")
             let decodedId = decoded._id;
-            console.log(decodedId)
             User.findById(decodedId)
             .then(function(user){
-               if(user._id == id){
-
+               if(user){
                   //same id
                   req.decoded = decoded;
                   next();
@@ -30,6 +27,7 @@ const auth = function(req, res, next){
             })
          }
          else{
+            console.log("ga masuk decoded");
             res.status(403).json("LOGIN DL BRO")
          }
       })

@@ -6,7 +6,7 @@ const img = require('../middlewares/img')
 
 /* GET users listing. */
 router
-  .get('/exp', auth, userController.getExp)
+  .get('/info', auth, userController.user)
   .get('/level', auth, userController.getLevel)
   .post('/login', userController.signIn)
   .post('/register', userController.signUp)
